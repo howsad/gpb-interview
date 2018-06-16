@@ -1,7 +1,9 @@
 package ru.gpb.interview.generator;
 
 import com.google.common.base.Stopwatch;
+import ru.gpb.interview.SaleDetails;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.SplittableRandom;
 
@@ -13,8 +15,8 @@ import java.util.SplittableRandom;
 
 public class SaleDetailsGeneratorMain {
 
-    private static final int PRICE_FROM = 10_000_00;
-    private static final int PRICE_TO = 100_000_00;
+    private static final BigDecimal PRICE_FROM = BigDecimal.valueOf(10_000_00, SaleDetails.PRICE_SCALE);
+    private static final BigDecimal PRICE_TO = BigDecimal.valueOf(100_000_00, SaleDetails.PRICE_SCALE);
 
     public static void main(String[] args) {
         Stopwatch stopwatch = Stopwatch.createStarted();

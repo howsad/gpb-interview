@@ -3,6 +3,7 @@ package ru.gpb.interview.generator;
 import com.google.common.collect.Streams;
 import ru.gpb.interview.SaleDetails;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -12,11 +13,11 @@ import java.util.stream.Stream;
 
 class SaleDetailsStreamGenerator {
 
-    private final int priceFrom;
-    private final int priceTo;
+    private final BigDecimal priceFrom;
+    private final BigDecimal priceTo;
     private final SplittableRandom random;
 
-    SaleDetailsStreamGenerator(int priceFrom, int priceTo, SplittableRandom random) {
+    SaleDetailsStreamGenerator(BigDecimal priceFrom, BigDecimal priceTo, SplittableRandom random) {
         this.priceFrom = priceFrom;
         this.priceTo = priceTo;
         this.random = random;
@@ -57,9 +58,9 @@ class SaleDetailsStreamGenerator {
                 .mapToObj(nameList::get);
     }
 
-    private Stream<Integer> generatePriceStream(int from, int to) {
-        return random.ints(from, to + 1)
-                .boxed();
+    private Stream<BigDecimal> generatePriceStream(BigDecimal from, BigDecimal to) {
+        return random.ints(from.unscaledValue().intValue(), to.unscaledValue().intValue() + 1)
+                .mapToObj(p -> BigDecimal.valueOf(p, SaleDetails.PRICE_SCALE));
     }
 
 }

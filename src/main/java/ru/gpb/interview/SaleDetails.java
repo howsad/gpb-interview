@@ -1,15 +1,19 @@
 package ru.gpb.interview;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class SaleDetails {
+
+    /** Number of digits after decimal point in price */
+    public static final int PRICE_SCALE = 2;
 
     /** DateTime of the sale */
     private LocalDateTime dateTime;
     /** Name of the selling point where the sale was made */
     private String sellingPointName;
-    /** Price measured in minor units of currency, i.e. 1$ = 100 cents. So in that case price would be 100 */
-    private Integer price;
+    /** Price of the sold item */
+    private BigDecimal price;
 
     public SaleDetails() {
     }
@@ -32,32 +36,30 @@ public class SaleDetails {
         return this;
     }
 
-    public Integer getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public SaleDetails withPrice(Integer price) {
+    public SaleDetails withPrice(BigDecimal price) {
         this.price = price;
         return this;
     }
 
     public String toOutputString() {
         return String.format(
-                "%s\t%s\t%d.%02d",
+                "%s\t%s\t%s",
                 dateTime,
                 sellingPointName,
-                price / 100,
-                price % 100
+                price
         );
     }
 
     /* We assume that the string s complies with format in ru.gpb.interview.SaleDetails.toOutputString */
     public static SaleDetails fromString(String s) {
         String[] split = s.trim().split("\t");
-        String price = split[2].replace(".", "");
         return new SaleDetails()
                 .withDateTime(LocalDateTime.parse(split[0]))
                 .withSellingPointName(split[1])
-                .withPrice(Integer.valueOf(price));
+                .withPrice(new BigDecimal(split[2]));
     }
 }

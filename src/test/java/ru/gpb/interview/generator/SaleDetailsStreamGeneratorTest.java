@@ -5,6 +5,7 @@ import com.google.common.collect.Range;
 import org.junit.Test;
 import ru.gpb.interview.SaleDetails;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,8 +22,8 @@ import static org.junit.Assert.assertTrue;
 
 public class SaleDetailsStreamGeneratorTest {
 
-    private static final int PRICE_FROM = 100;
-    private static final int PRICE_TO = 1000;
+    private static final BigDecimal PRICE_FROM = BigDecimal.valueOf(100, SaleDetails.PRICE_SCALE);
+    private static final BigDecimal PRICE_TO = BigDecimal.valueOf(1000, SaleDetails.PRICE_SCALE);
     private static final LocalDateTime REFERENCE_DATE = LocalDate.of(2018, 6, 16).atStartOfDay();
     private static final LocalDateTime LOWER_DATE = LocalDate.of(2017, 1, 1).atStartOfDay();
     private static final LocalDateTime UPPER_DATE = LocalDate.of(2018, 1, 1).atStartOfDay();
