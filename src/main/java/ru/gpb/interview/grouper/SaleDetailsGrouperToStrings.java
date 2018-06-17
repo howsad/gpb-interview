@@ -1,40 +1,18 @@
 package ru.gpb.interview.grouper;
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import ru.gpb.interview.SaleDetails;
 
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class SaleDetailsGrouper {
+class SaleDetailsGrouperToStrings {
 
-    void groupInputIntoFile(GrouperSettings grouperSettings) {
-        try {
-            Path inputFilePath = grouperSettings.getInputFilePath();
-            Path outputFilePath = grouperSettings.getOutputFilePath();
-            ArrayList<String> output = Lists.newArrayList(Iterables.concat(
-                    groupByDateOrderByDate(getSaleDetailsStream(inputFilePath)),
-                    Collections.singletonList("*====================================*"),
-                    groupBySellingPointNameOrderByPriceDesc(getSaleDetailsStream(inputFilePath))
-            ));
-            Files.write(outputFilePath, output);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private Stream<SaleDetails> getSaleDetailsStream(Path inputFile) throws IOException {
-        return Files.lines(inputFile)
-                .map(SaleDetails::fromString);
-    }
-
-    private List<String> groupByDateOrderByDate(Stream<SaleDetails> saleDetailsStream) {
+    List<String> groupByDateOrderByDate(Stream<SaleDetails> saleDetailsStream) {
         return saleDetailsStream
                 .collect(
                         Collectors.groupingBy(
@@ -50,7 +28,7 @@ class SaleDetailsGrouper {
                 .collect(Collectors.toList());
     }
 
-    private List<String> groupBySellingPointNameOrderByPriceDesc(Stream<SaleDetails> saleDetailsStream) {
+    List<String> groupBySellingPointNameOrderByPriceDesc(Stream<SaleDetails> saleDetailsStream) {
         return saleDetailsStream
                 .collect(
                         Collectors.groupingBy(
