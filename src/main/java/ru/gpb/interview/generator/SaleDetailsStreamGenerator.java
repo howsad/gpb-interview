@@ -54,6 +54,9 @@ class SaleDetailsStreamGenerator {
     }
 
     private Stream<String> generateSellingPointNameStream(List<String> nameList) {
+        if (nameList.isEmpty()) {
+            throw new RuntimeException("Файл с именами точек продаж пуст!");
+        }
         return random.ints(0, nameList.size())
                 .mapToObj(nameList::get);
     }
